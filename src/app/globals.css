@@ -6,11 +6,15 @@
   :root {
     --cyber-dark: #0a0c0f;
     --cyber-deeper: #050708;
+    --cyber-bg: #0f1117;
     --cyber-primary: #00ffff;
     --cyber-secondary: #ff00ff;
     --cyber-accent: #ffff00;
     --cyber-purple: #b300ff;
     --cyber-text: #e0e0e0;
+    --cyber-muted: #8892b0;
+    --cyber-red: #ff3b3b;
+    --cyber-cyan: #00ffff;
     --safe-top: env(safe-area-inset-top);
     --safe-bottom: env(safe-area-inset-bottom);
   }
@@ -48,7 +52,7 @@
     );
   }
 
-  /* 霓虹文字 - 移动端优化 */
+  /* 霓虹文字 */
   .neon-text {
     @apply text-cyber-primary font-bold;
     text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
@@ -59,7 +63,12 @@
     text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
   }
 
-  /* 故障文字 - 移动端优化 */
+  .neon-text-purple {
+    @apply text-cyber-purple;
+    text-shadow: 0 0 10px #b300ff, 0 0 20px #b300ff;
+  }
+
+  /* 故障文字 */
   .glitch-text {
     @apply relative inline-block;
     animation: glitch 3s infinite;
@@ -86,6 +95,13 @@
     text-shadow: 0 0 5px #00ffff;
   }
 
+  /* 终端光标 */
+  .terminal-cursor::after {
+    content: '▊';
+    @apply ml-1 text-cyber-primary;
+    animation: cursor-blink 1s step-end infinite;
+  }
+
   /* 科技按钮 - 移动端优化 */
   .cyber-button {
     @apply relative px-4 py-2 sm:px-6 sm:py-2 bg-transparent border border-cyber-primary 
@@ -101,6 +117,10 @@
 
   .cyber-button:hover::before {
     @apply scale-x-100;
+  }
+
+  .cyber-button:hover {
+    box-shadow: 0 0 30px #00ffff;
   }
 
   /* 扫描线 - 移动端减弱 */
@@ -128,7 +148,7 @@ html {
 }
 
 body {
-  background-color: #0f1117;
+  background-color: var(--cyber-bg);
   color: var(--cyber-text);
   font-family: var(--font-geist-mono), 'Fira Code', monospace;
   @apply min-h-screen overflow-x-hidden w-full max-w-[100vw] relative;
@@ -154,10 +174,73 @@ body::before {
   animation: grid-flow 20s linear infinite;
 }
 
-/* 动画 keyframes */
+/* CRT 扫描线效果 - 移动端减弱 */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 255, 255, 0.03) 50%);
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.2;
+  @apply sm:opacity-30;
+}
+
+/* 移动端容器优化 */
+.container {
+  @apply w-full max-w-full px-3 sm:px-4 mx-auto;
+}
+
+/* 滚动条优化 */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  @apply sm:w-[6px] sm:h-[6px];
+}
+
+::-webkit-scrollbar-track {
+  background: var(--cyber-deeper);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--cyber-primary);
+  border: 1px solid var(--cyber-secondary);
+  box-shadow: 0 0 10px var(--cyber-primary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--cyber-secondary);
+  box-shadow: 0 0 10px var(--cyber-secondary);
+}
+
+/* 移动端滚动条隐藏 */
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 2px;
+    height: 2px;
+  }
+}
+
+/* ========== 动画 Keyframes ========== */
 @keyframes shine {
   0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
   100% { transform: translateX(200%) translateY(200%) rotate(45deg); }
+}
+
+@keyframes glitch {
+  0%, 100% { transform: none; opacity: 1; }
+  7% { transform: skew(-0.5deg, -0.9deg); opacity: 0.75; }
+  10% { transform: none; opacity: 1; }
+  27% { transform: none; opacity: 1; }
+  30% { transform: skew(0.8deg, -0.1deg); opacity: 0.75; }
+  35% { transform: none; opacity: 1; }
+  52% { transform: none; opacity: 1; }
+  55% { transform: skew(-1deg, 0.2deg); opacity: 0.75; }
+  50% { transform: none; opacity: 1; }
 }
 
 @keyframes glitch-offset {
@@ -176,31 +259,209 @@ body::before {
   80% { transform: translate(-1px, 1px); }
 }
 
-/* 移动端容器优化 */
-.container {
-  @apply w-full px-3 sm:px-4 mx-auto;
+@keyframes scan-line {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
 }
 
-/* 滚动条优化 */
-::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
-  @apply sm:w-[6px] sm:h-[6px];
+@keyframes grid-flow {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(40px); }
 }
 
-::-webkit-scrollbar-track {
-  background: #0f1117;
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
-::-webkit-scrollbar-thumb {
-  background: #00ffff;
-  border: 1px solid #ff00ff;
+@keyframes pulse-glow {
+  0%, 100% { 
+    box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff;
+    opacity: 1;
+  }
+  50% { 
+    box-shadow: 0 0 30px #ff00ff, 0 0 60px #ff00ff;
+    opacity: 0.9;
+  }
 }
 
-/* 移动端滚动条隐藏 */
-@media (max-width: 768px) {
-  ::-webkit-scrollbar {
-    width: 2px;
-    height: 2px;
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+/* ========== 统一文章样式 (cyber-markdown) ========== */
+.cyber-markdown {
+  @apply text-cyber-text/90 leading-relaxed;
+  font-family: var(--font-geist-mono), 'Fira Code', monospace;
+}
+
+/* 标题 */
+.cyber-markdown h1 {
+  @apply text-3xl sm:text-4xl font-bold mt-8 mb-4 text-cyber-primary;
+  text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+}
+
+.cyber-markdown h2 {
+  @apply text-2xl sm:text-3xl font-bold mt-6 mb-3 text-cyber-secondary;
+  text-shadow: 0 0 8px #ff00ff, 0 0 15px #ff00ff;
+}
+
+.cyber-markdown h3 {
+  @apply text-xl sm:text-2xl font-bold mt-5 mb-2 text-cyber-accent;
+  text-shadow: 0 0 5px #ffff00;
+}
+
+.cyber-markdown h4 {
+  @apply text-lg sm:text-xl font-bold mt-4 mb-2 text-cyber-purple;
+  text-shadow: 0 0 5px #b300ff;
+}
+
+.cyber-markdown h5,
+.cyber-markdown h6 {
+  @apply text-base sm:text-lg font-bold mt-3 mb-1 text-cyber-text;
+  text-shadow: 0 0 5px currentColor;
+}
+
+/* 段落 */
+.cyber-markdown p {
+  @apply my-4 text-sm sm:text-base;
+}
+
+/* 强调 */
+.cyber-markdown strong {
+  @apply text-cyber-primary font-bold;
+  text-shadow: 0 0 5px #00ffff;
+}
+
+.cyber-markdown em {
+  @apply text-cyber-secondary italic;
+}
+
+/* 链接 */
+.cyber-markdown a {
+  @apply text-cyber-cyan border-b border-cyber-cyan/30 hover:text-cyber-secondary hover:border-cyber-secondary transition-colors;
+}
+
+/* 列表 */
+.cyber-markdown ul,
+.cyber-markdown ol {
+  @apply pl-6 my-4 space-y-2;
+}
+
+.cyber-markdown li {
+  @apply text-cyber-text/80;
+}
+
+.cyber-markdown ul li::marker {
+  @apply text-cyber-primary;
+  content: '► ';
+}
+
+.cyber-markdown ol li::marker {
+  @apply text-cyber-secondary font-mono;
+}
+
+/* 引用块 */
+.cyber-markdown blockquote {
+  @apply border-l-4 border-cyber-secondary pl-4 py-2 my-4 bg-cyber-secondary/5 italic;
+  box-shadow: -5px 0 15px rgba(255, 0, 255, 0.2);
+}
+
+.cyber-markdown blockquote p {
+  @apply text-cyber-text/80;
+}
+
+/* 代码块 (由 rehype-pretty-code 生成) */
+.cyber-markdown pre {
+  @apply bg-cyber-deeper border border-cyber-primary/30 p-4 my-6 overflow-x-auto;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+}
+
+.cyber-markdown pre code {
+  @apply font-mono text-sm text-cyber-text;
+  counter-reset: line;
+}
+
+/* 行内代码 */
+.cyber-markdown :not(pre) > code {
+  @apply bg-black/50 text-cyber-primary border border-cyber-primary/30 px-1.5 py-0.5 rounded-none text-sm font-mono;
+}
+
+/* 表格 */
+.cyber-markdown table {
+  @apply w-full border-collapse my-4;
+}
+
+.cyber-markdown th {
+  @apply border border-cyber-primary/30 px-4 py-2 text-left bg-cyber-primary/10 text-cyber-primary font-bold;
+}
+
+.cyber-markdown td {
+  @apply border border-cyber-primary/30 px-4 py-2 text-cyber-text/80;
+}
+
+/* 分割线 */
+.cyber-markdown hr {
+  @apply border-0 h-px my-8;
+  background: linear-gradient(90deg, transparent, #00ffff, #ff00ff, transparent);
+}
+
+/* 图片 */
+.cyber-markdown img {
+  @apply border border-cyber-primary/30 my-4 max-w-full;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+/* 任务列表 (GFM) */
+.cyber-markdown .task-list-item {
+  @apply list-none;
+}
+
+.cyber-markdown .task-list-item input[type="checkbox"] {
+  @apply mr-2 accent-cyber-primary;
+}
+
+/* 故障文字效果 (可选) */
+.cyber-markdown .glitch {
+  position: relative;
+  animation: glitch 3s infinite;
+}
+
+.cyber-markdown .glitch::before,
+.cyber-markdown .glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.cyber-markdown .glitch::before {
+  color: #ff00ff;
+  z-index: -1;
+  animation: glitch-offset 0.3s infinite;
+}
+
+.cyber-markdown .glitch::after {
+  color: #00ffff;
+  z-index: -2;
+  animation: glitch-offset2 0.2s infinite;
+}
+
+/* 移动端适配微调 */
+@media (max-width: 640px) {
+  .cyber-markdown pre {
+    @apply text-xs;
+  }
+  .cyber-markdown h1 {
+    @apply text-2xl;
+  }
+  .cyber-markdown h2 {
+    @apply text-xl;
+  }
+  .cyber-markdown h3 {
+    @apply text-lg;
   }
 }
