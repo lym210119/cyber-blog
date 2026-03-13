@@ -1,12 +1,15 @@
+// src/app/search/page.tsx
 'use client'
 
+import { Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { fetchPosts } from '@/lib/client/posts'
 
-export default function SearchPage() {
+// 搜索组件 - 使用 useSearchParams
+function SearchContent() {
   const searchParams = useSearchParams()
   const query = searchParams.get('q') || ''
   
@@ -73,7 +76,7 @@ export default function SearchPage() {
   }
 
   return (
-    <div className="container mx-auto space-y-4 sm:space-y-6">
+    <div className="container mx-auto max-w-4xl space-y-4 sm:space-y-6">
       {/* 搜索框 */}
       <div className="neon-panel p-4 sm:p-6">
         <div className="flex items-center gap-2 text-xs sm:text-sm mb-3 sm:mb-4">
@@ -104,7 +107,6 @@ export default function SearchPage() {
           </button>
         </form>
 
-        {/* 搜索提示 - 移动端简化 */}
         <div className="mt-2 text-[8px] sm:text-xs text-cyber-muted/50 flex gap-2 sm:gap-4">
           <span>支持标题/内容/标签</span>
           <span className="hidden xs:inline">|</span>
@@ -196,7 +198,7 @@ export default function SearchPage() {
                       </p>
 
                       <div className="flex flex-wrap gap-1">
-                        {post.tags.slice(0, 2).map((tag: string) => (
+                        {post.tags.slice(0, 2).map(tag => (
                           <span key={tag} className="text-[8px] sm:text-xs px-1.5 py-0.5 
                                                    border border-cyber-primary/30">
                             #{tag}
@@ -240,5 +242,22 @@ export default function SearchPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+// 主页面组件，使用 Suspense 包裹 SearchContent
+export default function SearchPage() {
+  return (
+    <Suspense fallback={
+      <div className="container mx-auto max-w-4xl space-y-4 sm:space-y-6">
+        <div className="neon-panel p-8 sm:p-12 text-center">
+          <div className="inline-block w-6 h-6 sm:w-8 sm:h-8 border-2 border-cyber-primary 
+                        border-t-cyber-secondary rounded-full animate-spin"></div>
+          <p className="mt-3 sm:mt-4 text-xs sm:text-sm text-cyber-muted">加载搜索...</p>
+        </div>
+      </div>
+    }>
+      <SearchContent />
+    </Suspense>
   )
 }
