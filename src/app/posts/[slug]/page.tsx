@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import { getPostBySlug, getAllPosts } from '@/lib/server/posts'
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import MarkdownRenderer from '@/components/MarkdownRenderer'
 
 export async function generateStaticParams() {
   const { posts } = await getAllPosts({ limit: 100 })
@@ -111,7 +112,7 @@ export default async function PostPage({
       </header>
 
       {/* 文章内容 - 移动端优化字体 */}
-      <div className="neon-panel p-4 sm:p-6 md:p-8">
+      {/* <div className="neon-panel p-4 sm:p-6 md:p-8">
         <div className="prose prose-invert prose-sm sm:prose-base max-w-none">
           {post.content.split('\n').map((line, i) => {
             if (line.startsWith('# ')) {
@@ -150,8 +151,12 @@ export default async function PostPage({
             }
           })}
         </div>
-      </div>
+      </div> */}
 
+      <div className="neon-panel p-4 sm:p-6 md:p-8">
+        <MarkdownRenderer content={post.content} />
+      </div>
+      
       {/* 文章导航 */}
       <div className="grid grid-cols-2 gap-3 sm:gap-4">
         <Link
