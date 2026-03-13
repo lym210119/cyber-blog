@@ -7,7 +7,7 @@ import Link from 'next/link'
 export const Footer = () => {
   const [stats, setStats] = useState({
     uptime: '99.97%',
-    connections: '1.3k',
+    connections: '1,337',
     latency: '42ms',
     version: '2.3.1',
   })
@@ -16,9 +16,7 @@ export const Footer = () => {
     const interval = setInterval(() => {
       setStats({
         uptime: '99.97%',
-        connections: Math.floor(Math.random() * 1000 + 1000) > 1000 
-          ? (Math.random() * 1 + 1).toFixed(1) + 'k' 
-          : Math.floor(Math.random() * 1000 + 1000).toString(),
+        connections: Math.floor(Math.random() * 1000 + 1000).toLocaleString(),
         latency: Math.floor(Math.random() * 20 + 30) + 'ms',
         version: '2.3.1',
       })
@@ -27,52 +25,66 @@ export const Footer = () => {
   }, [])
 
   return (
-    <footer className="neon-panel border-b-0 border-x-0 mt-8 pb-safe-bottom">
-      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6">
-        {/* 第一行：系统状态 + 链接 - 移动端改为两行 */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-[10px] sm:text-xs font-mono">
-          {/* 左侧状态 */}
-          <div className="flex items-center flex-wrap gap-2 sm:gap-4">
-            <span className="text-cyber-primary animate-pulse-slow flex-shrink-0">●</span>
-            <span className="text-cyber-muted hidden xs:inline">v{stats.version}</span>
-            <span className="text-cyber-secondary hidden sm:inline">|</span>
-            <span className="text-cyber-muted hidden sm:inline">UPTIME: {stats.uptime}</span>
-            <span className="text-cyber-secondary hidden md:inline">|</span>
-            <span className="text-cyber-muted hidden md:inline">CONN: {stats.connections}</span>
-            <span className="text-cyber-secondary hidden lg:inline">|</span>
-            <span className="text-cyber-muted hidden lg:inline">LAT: {stats.latency}</span>
+    <footer className="neon-panel border-b-0 border-x-0 mt-8">
+      <div className="container mx-auto px-4 py-6">
+        {/* 系统状态栏 */}
+        <div className="flex flex-wrap items-center justify-between gap-4 text-xs font-mono">
+          <div className="flex items-center space-x-4">
+            <span className="text-cyber-primary animate-pulse-slow">●</span>
+            <span className="text-cyber-muted">SYSTEM v{stats.version}</span>
+            <span className="text-cyber-secondary">|</span>
+            <span className="text-cyber-muted">UPTIME: {stats.uptime}</span>
           </div>
 
-          {/* 右侧链接 - 移动端换行显示 */}
-          <div className="flex items-center gap-3 sm:gap-4">
-            <a href="/feed.xml" className="text-cyber-primary hover:text-cyber-secondary transition-colors touch-target px-2 py-1">RSS</a>
-            <a href="/sitemap.xml" className="text-cyber-primary hover:text-cyber-secondary transition-colors touch-target px-2 py-1 hidden xs:inline">SITEMAP</a>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-cyber-primary hover:text-cyber-secondary transition-colors touch-target px-2 py-1">GITHUB</a>
+          <div className="flex items-center space-x-4">
+            <span className="text-cyber-muted">CONNECTIONS: {stats.connections}</span>
+            <span className="text-cyber-secondary">|</span>
+            <span className="text-cyber-muted">LATENCY: {stats.latency}</span>
           </div>
-        </div>
 
-        {/* 第二行：导航链接 - 移动端可横向滚动 */}
-        <div className="mt-4 pt-3 border-t border-cyber-primary/30 overflow-x-auto">
-          <div className="flex gap-4 sm:gap-6 text-[10px] sm:text-xs min-w-max pb-1">
-            <Link href="/" className="text-cyber-muted hover:text-cyber-primary transition-colors touch-target px-2 py-1">首页</Link>
-            <Link href="/posts" className="text-cyber-muted hover:text-cyber-primary transition-colors touch-target px-2 py-1">文章</Link>
-            <Link href="/tags" className="text-cyber-muted hover:text-cyber-primary transition-colors touch-target px-2 py-1">标签</Link>
-            <Link href="/archive" className="text-cyber-muted hover:text-cyber-primary transition-colors touch-target px-2 py-1">归档</Link>
-            <Link href="/about" className="text-cyber-muted hover:text-cyber-primary transition-colors touch-target px-2 py-1">关于</Link>
+          <div className="flex items-center space-x-4">
+            <a href="/feed.xml" className="text-cyber-primary hover:text-cyber-secondary transition-colors">
+              [RSS]
+            </a>
+            <a href="/sitemap.xml" className="text-cyber-primary hover:text-cyber-secondary transition-colors">
+              [SITEMAP]
+            </a>
+            <a href="/manifest.webmanifest" className="text-cyber-primary hover:text-cyber-secondary transition-colors">
+              [PWA]
+            </a>
           </div>
         </div>
 
-        {/* 第三行：版权和诊断信息 - 移动端简化 */}
-        <div className="mt-3 text-[8px] sm:text-[10px] text-cyber-muted/50 font-mono flex flex-wrap justify-between items-center">
-          <span>© 2025 赛博空间</span>
-          <span className="hidden xs:inline">ERROR: 0x7C5F_3A1D</span>
-          <span className="hidden sm:inline">RAY_ID: 9db14ccd</span>
-          <span className="hidden md:inline">NODE: v20.11.0</span>
+        {/* 导航链接 */}
+        <div className="mt-4 pt-4 border-t border-cyber-primary/30">
+          <div className="flex flex-wrap gap-4 text-xs">
+            <Link href="/" className="text-cyber-muted hover:text-cyber-primary">首页</Link>
+            <Link href="/posts" className="text-cyber-muted hover:text-cyber-primary">文章</Link>
+            <Link href="/tags" className="text-cyber-muted hover:text-cyber-primary">标签</Link>
+            <Link href="/archive" className="text-cyber-muted hover:text-cyber-primary">归档</Link>
+            <Link href="/search" className="text-cyber-muted hover:text-cyber-primary">搜索</Link>
+            <Link href="/about" className="text-cyber-muted hover:text-cyber-primary">关于</Link>
+          </div>
+        </div>
+
+        {/* 诊断信息 */}
+        <div className="mt-4 text-[10px] text-cyber-muted/50 font-mono">
+          <div className="flex flex-wrap gap-4">
+            <span>© 2026 赛博空间·极客终端博客</span>
+            <span>ERROR_CODE: 0x7C5F_3A1D</span>
+            <span>RAY_ID: 9db14ccd3a71dbb5</span>
+            <span className="hidden md:inline">CLIENT_IP: 240e:45c:ce60:3f48</span>
+          </div>
+          <div className="flex flex-wrap gap-4 mt-1">
+            <span>BUILD: {new Date().toISOString().split('T')[0]}</span>
+            <span>NODE: v20.11.0</span>
+            <span>NEXT: 15.2.2</span>
+          </div>
         </div>
       </div>
 
-      {/* 扫描线效果 */}
-      <div className="scan-line opacity-30 sm:opacity-50"></div>
+      {/* 扫描线 */}
+      <div className="scan-line"></div>
     </footer>
   )
 }
