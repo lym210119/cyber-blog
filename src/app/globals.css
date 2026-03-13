@@ -340,7 +340,7 @@ body::after {
 
 /* 链接 */
 .cyber-markdown a {
-  @apply text-cyber-cyan border-b border-cyber-cyan/30 hover:text-cyber-secondary hover:border-cyber-secondary transition-colors;
+  @apply text-cyber-primary border-b border-cyber-cyan/30 hover:text-cyber-secondary hover:border-cyber-secondary transition-colors;
 }
 
 /* 列表 */
