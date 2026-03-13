@@ -196,7 +196,7 @@ export default function SearchPage() {
                       </p>
 
                       <div className="flex flex-wrap gap-1">
-                        {post.tags.slice(0, 2).map(tag => (
+                        {post.tags.slice(0, 2).map((tag: string) => (
                           <span key={tag} className="text-[8px] sm:text-xs px-1.5 py-0.5 
                                                    border border-cyber-primary/30">
                             #{tag}

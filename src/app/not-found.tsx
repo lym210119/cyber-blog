@@ -194,10 +194,10 @@ export default function NotFound() {
           className="mt-12 flex flex-wrap gap-3 justify-center"
         >
           {[
-            { cmd: 'ls', desc: '列出文章', href: '/posts' },
-            { cmd: 'cd ~', desc: '返回首页', href: '/' },
-            { cmd: 'help', desc: '获取帮助', href: '#' },
-            { cmd: 'ping', desc: '测试连接', href: '#' },
+            { cmd: 'ls', desc: '列出文章', href: '/posts'  as const },
+            { cmd: 'cd ~', desc: '返回首页', href: '/' as const },
+            { cmd: 'help', desc: '获取帮助', href: '#' as const },
+            { cmd: 'ping', desc: '测试连接', href: '#' as const },
           ].map((item) => (
             <Link
               key={item.cmd}

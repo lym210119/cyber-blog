@@ -10,12 +10,12 @@ export const MobileNav = () => {
   const [menuOpen, setMenuOpen] = useState(false)
 
   const navItems = [
-    { href: '/', label: '首页', icon: '⌂', mobileIcon: '🏠' },
-    { href: '/posts', label: '文章', icon: '📄', mobileIcon: '📚' },
-    { href: '/tags', label: '标签', icon: '#', mobileIcon: '🏷️' },
-    { href: '/archive', label: '归档', icon: '📚', mobileIcon: '🗂️' },
-    { href: '/search', label: '搜索', icon: '🔍', mobileIcon: '🔎' },
-    { href: '/about', label: '关于', icon: '👤', mobileIcon: 'ℹ️' },
+    { href: '/' as const, label: '首页', icon: '⌂', mobileIcon: '🏠' },
+    { href: '/posts' as const, label: '文章', icon: '📄', mobileIcon: '📚' },
+    { href: '/tags' as const, label: '标签', icon: '#', mobileIcon: '🏷️' },
+    { href: '/archive' as const, label: '归档', icon: '📚', mobileIcon: '🗂️' },
+    { href: '/search' as const, label: '搜索', icon: '🔍', mobileIcon: '🔎' },
+    { href: '/about' as const, label: '关于', icon: '👤', mobileIcon: 'ℹ️' },
   ]
 
   return (

@@ -25,12 +25,12 @@ export const Header = () => {
   }, [])
 
   const navItems = [
-    { href: '/', label: 'home', icon: '⌂', mobileIcon: '🏠' },
-    { href: '/posts', label: 'posts', icon: '📄', mobileIcon: '📚' },
-    { href: '/tags', label: 'tags', icon: '#', mobileIcon: '🏷️' },
-    { href: '/archive', label: 'archive', icon: '📚', mobileIcon: '🗂️' },
-    { href: '/search', label: 'search', icon: '🔍', mobileIcon: '🔎' },
-    { href: '/about', label: 'about', icon: '👤', mobileIcon: 'ℹ️' },
+    { href: '/' as const, label: 'home', icon: '⌂', mobileIcon: '🏠' },
+    { href: '/posts' as const, label: 'posts', icon: '📄', mobileIcon: '📚' },
+    { href: '/tags' as const, label: 'tags', icon: '#', mobileIcon: '🏷️' },
+    { href: '/archive' as const, label: 'archive', icon: '📚', mobileIcon: '🗂️' },
+    { href: '/search' as const, label: 'search', icon: '🔍', mobileIcon: '🔎' },
+    { href: '/about' as const, label: 'about', icon: '👤', mobileIcon: 'ℹ️' },
   ]
 
   return (

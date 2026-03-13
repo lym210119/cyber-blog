@@ -102,7 +102,7 @@ export const CommandPalette = () => {
                     <Command.Item
                       key={cmd.command}
                       onSelect={() => {
-                        router.push(cmd.href)
+                        router.push(cmd.href as any)
                         setOpen(false)
                       }}
                       className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 
