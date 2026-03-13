@@ -78,7 +78,7 @@ export const Footer = () => {
           <div className="flex flex-wrap gap-4 mt-1">
             <span>BUILD: {new Date().toISOString().split('T')[0]}</span>
             <span>NODE: v20.11.0</span>
-            <span>NEXT: 15.2.2</span>
+            <span>NEXT: 15.2.6</span>
           </div>
         </div>
       </div>
