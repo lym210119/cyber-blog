@@ -7,6 +7,7 @@ import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { fetchPosts } from '@/lib/client/posts'
+import { Post } from '@/types' // 确保导入 Post 类型
 
 // 搜索组件 - 使用 useSearchParams
 function SearchContent() {
@@ -14,7 +15,7 @@ function SearchContent() {
   const query = searchParams.get('q') || ''
   
   const [searchQuery, setSearchQuery] = useState(query)
-  const [results, setResults] = useState<any[]>([])
+  const [results, setResults] = useState<Post[]>([]) // 明确指定类型
   const [loading, setLoading] = useState(false)
   const [searchHistory, setSearchHistory] = useState<string[]>([])
 
@@ -37,7 +38,7 @@ function SearchContent() {
     try {
       const { posts } = await fetchPosts(1, undefined, 50)
       
-      const filtered = posts.filter(post => {
+      const filtered = posts.filter((post: Post) => { // 添加 post 类型
         const searchLower = q.toLowerCase()
         return (
           post.title.toLowerCase().includes(searchLower) ||
@@ -171,7 +172,7 @@ function SearchContent() {
               </div>
             </div>
 
-            {/* 结果列表 */}
+            {/* 结果列表 - 修复了第 201 行的类型错误 */}
             {results.length > 0 ? (
               results.map((post, index) => (
                 <motion.div
@@ -197,8 +198,9 @@ function SearchContent() {
                         {post.excerpt}
                       </p>
 
+                      {/* 修复关键：为 tag 参数添加类型注解 :string */}
                       <div className="flex flex-wrap gap-1">
-                        {post.tags.slice(0, 2).map(tag => (
+                        {post.tags.slice(0, 2).map((tag: string) => (
                           <span key={tag} className="text-[8px] sm:text-xs px-1.5 py-0.5 
                                                    border border-cyber-primary/30">
                             #{tag}
