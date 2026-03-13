@@ -205,25 +205,96 @@ body::before {
   }
 }
 
-/* 代码块容器 */
+/* ========== 统一文章样式 ========== */
+.cyber-markdown {
+  /* 基础文字样式 */
+  @apply text-cyber-text/90 leading-relaxed;
+  font-family: var(--font-geist-mono), 'Fira Code', monospace;
+}
+
+/* 标题统一风格 */
+.cyber-markdown h1 {
+  @apply text-3xl sm:text-4xl font-bold mt-8 mb-4 text-cyber-primary;
+  text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+}
+
+.cyber-markdown h2 {
+  @apply text-2xl sm:text-3xl font-bold mt-6 mb-3 text-cyber-secondary;
+  text-shadow: 0 0 8px #ff00ff, 0 0 15px #ff00ff;
+}
+
+.cyber-markdown h3 {
+  @apply text-xl sm:text-2xl font-bold mt-5 mb-2 text-cyber-yellow;
+  text-shadow: 0 0 5px #ffff00;
+}
+
+.cyber-markdown h4 {
+  @apply text-lg sm:text-xl font-bold mt-4 mb-2 text-cyber-purple;
+  text-shadow: 0 0 5px #b300ff;
+}
+
+.cyber-markdown h5, .cyber-markdown h6 {
+  @apply text-base sm:text-lg font-bold mt-3 mb-1 text-cyber-text;
+  text-shadow: 0 0 5px currentColor;
+}
+
+/* 段落 */
+.cyber-markdown p {
+  @apply my-4 text-sm sm:text-base;
+}
+
+/* 强调 */
+.cyber-markdown strong {
+  @apply text-cyber-primary font-bold;
+  text-shadow: 0 0 5px #00ffff;
+}
+
+.cyber-markdown em {
+  @apply text-cyber-secondary italic;
+}
+
+/* 链接 */
+.cyber-markdown a {
+  @apply text-cyber-cyan border-b border-cyber-cyan/30 hover:text-cyber-secondary hover:border-cyber-secondary transition-colors;
+}
+
+/* 列表 */
+.cyber-markdown ul, .cyber-markdown ol {
+  @apply pl-6 my-4 space-y-2;
+}
+
+.cyber-markdown li {
+  @apply text-cyber-text/80;
+}
+
+.cyber-markdown ul li::marker {
+  @apply text-cyber-primary;
+  content: '► ';
+}
+
+.cyber-markdown ol li::marker {
+  @apply text-cyber-secondary font-mono;
+}
+
+/* 引用块 */
+.cyber-markdown blockquote {
+  @apply border-l-4 border-cyber-secondary pl-4 py-2 my-4 bg-cyber-secondary/5 italic;
+  box-shadow: -5px 0 15px rgba(255, 0, 255, 0.2);
+}
+
+.cyber-markdown blockquote p {
+  @apply text-cyber-text/80;
+}
+
+/* 代码块（由 rehype-pretty-code 生成） */
 .cyber-markdown pre {
   @apply bg-cyber-deeper border border-cyber-primary/30 p-4 my-6 overflow-x-auto;
   box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
 }
 
-/* 代码块内文字 */
 .cyber-markdown pre code {
   @apply font-mono text-sm text-cyber-text;
-}
-
-/* 行号样式（如果启用） */
-.cyber-markdown .line {
-  @apply leading-6;
-}
-
-/* 高亮行 */
-.cyber-markdown .highlighted {
-  @apply bg-cyber-primary/10 border-l-4 border-cyber-primary pl-2;
+  counter-reset: line;
 }
 
 /* 行内代码 */
@@ -231,42 +302,62 @@ body::before {
   @apply bg-black/50 text-cyber-primary border border-cyber-primary/30 px-1.5 py-0.5 rounded-none text-sm font-mono;
 }
 
-/* 标题自动生成的链接 */
-.cyber-markdown h1 a,
-.cyber-markdown h2 a,
-.cyber-markdown h3 a,
-.cyber-markdown h4 a {
-  @apply no-underline hover:underline text-cyber-primary;
-}
-
-/* 表格样式 */
+/* 表格 */
 .cyber-markdown table {
   @apply w-full border-collapse my-4;
 }
 
-.cyber-markdown th,
-.cyber-markdown td {
-  @apply border border-cyber-primary/30 px-4 py-2 text-left;
-}
-
 .cyber-markdown th {
-  @apply bg-cyber-primary/10 text-cyber-primary;
+  @apply border border-cyber-primary/30 px-4 py-2 text-left bg-cyber-primary/10 text-cyber-primary font-bold;
 }
 
-/* 引用块 */
-.cyber-markdown blockquote {
-  @apply border-l-4 border-cyber-secondary pl-4 py-2 my-4 bg-cyber-secondary/5 italic;
+.cyber-markdown td {
+  @apply border border-cyber-primary/30 px-4 py-2 text-cyber-text/80;
 }
 
-/* 列表样式 */
-.cyber-markdown ul, .cyber-markdown ol {
-  @apply pl-6 my-4;
+/* 分割线 */
+.cyber-markdown hr {
+  @apply border-0 h-px my-8;
+  background: linear-gradient(90deg, transparent, #00ffff, #ff00ff, transparent);
 }
 
-.cyber-markdown li {
-  @apply my-1;
+/* 图片 */
+.cyber-markdown img {
+  @apply border border-cyber-primary/30 my-4 max-w-full;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
 }
 
-.cyber-markdown li::marker {
-  @apply text-cyber-primary;
+/* 任务列表（GFM） */
+.cyber-markdown .task-list-item {
+  @apply list-none;
 }
+
+.cyber-markdown .task-list-item input[type="checkbox"] {
+  @apply mr-2 accent-cyber-primary;
+}
+
+/* 故障文字效果（可选用于特定标题） */
+.cyber-markdown .glitch {
+  position: relative;
+  animation: glitch 3s infinite;
+}
+.cyber-markdown .glitch::before,
+.cyber-markdown .glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.cyber-markdown .glitch::before {
+  color: #ff00ff;
+  z-index: -1;
+  animation: glitch-offset 0.3s infinite;
+}
+.cyber-markdown .glitch::after {
+  color: #00ffff;
+  z-index: -2;
+  animation: glitch-offset2 0.2s infinite;
+}
+
