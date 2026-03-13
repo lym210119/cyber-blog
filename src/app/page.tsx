@@ -29,9 +29,9 @@ export default async function Home({
         </div>
 
         <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-2 sm:mb-4">
-          <span className="neon-text" data-text="CYBERPUNK">CYBERPUNK</span>
+          <span className="neon-text" data-text="CYBER">CYBER</span>
           <span className="text-cyber-secondary mx-2">::</span>
-          <span className="neon-text-pink" data-text="TERMINAL">TERMINAL</span>
+          <span className="neon-text-pink" data-text="BLOG">BLOG</span>
         </h1>
 
         <p className="text-cyber-muted text-xs sm:text-sm md:text-base max-w-2xl">
