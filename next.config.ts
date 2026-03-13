@@ -1,23 +1,41 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  // 启用React严格模式
   reactStrictMode: true,
   
-  // 图片优化配置
   images: {
-    domains: [], // 添加允许的图片域名
+    domains: [],
     unoptimized: process.env.NODE_ENV === 'development',
   },
 
-  // 实验性功能
   experimental: {
     typedRoutes: true,
   },
 
-  // webpack配置 - 解决Node.js模块问题
+  // 移动端优化
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY',
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin',
+          },
+        ],
+      },
+    ]
+  },
+
   webpack: (config, { isServer }) => {
-    // 客户端构建时，将Node.js模块指向空
     if (!isServer) {
       config.resolve.fallback = {
         ...config.resolve.fallback,

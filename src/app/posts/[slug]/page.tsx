@@ -20,22 +20,13 @@ export async function generateMetadata({
 
   if (!post) {
     return {
-      title: '404 - 文章未找到',
+      title: '文章未找到',
     }
   }
 
   return {
     title: post.title,
     description: post.excerpt,
-    keywords: post.tags.join(', '),
-    openGraph: {
-      title: post.title,
-      description: post.excerpt,
-      type: 'article',
-      publishedTime: post.date,
-      authors: [post.author],
-      tags: post.tags,
-    },
   }
 }
 
@@ -56,120 +47,103 @@ export default async function PostPage({
       year: 'numeric',
       month: 'long',
       day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
     })
   }
 
   return (
-    <article className="max-w-4xl mx-auto space-y-6">
+    <article className="container mx-auto max-w-4xl space-y-4 sm:space-y-6 px-3 sm:px-4">
       {/* 返回导航 */}
       <nav className="flex items-center justify-between">
         <Link 
-          href="/" 
-          className="group inline-flex items-center gap-2 neon-panel px-4 py-2 text-sm
-                     hover:border-cyber-secondary transition-all duration-300"
+          href="/posts" 
+          className="group inline-flex items-center gap-2 neon-panel px-3 py-2 sm:px-4 sm:py-2 
+                     text-xs sm:text-sm hover:border-cyber-secondary transition-all touch-target"
         >
           <span className="text-cyber-secondary group-hover:-translate-x-1 transition-transform">←</span>
-          <span className="text-cyber-muted group-hover:text-cyber-primary">返回终端</span>
+          <span className="hidden xs:inline">返回列表</span>
+          <span className="xs:hidden">返回</span>
         </Link>
         
-        <div className="text-xs text-cyber-muted/50 font-mono">
-          <span className="text-cyber-primary">$</span> cat ./posts/{post.slug}
+        <div className="text-[10px] sm:text-xs text-cyber-muted/50 font-mono">
+          <span className="text-cyber-primary">$</span> cat {post.slug}
         </div>
       </nav>
 
       {/* 文章头部 */}
-      <header className="neon-panel p-6 md:p-8 relative overflow-hidden">
-        {/* 背景光效 */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-cyber-primary/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyber-secondary/5 rounded-full blur-3xl"></div>
-        
-        <div className="relative z-10">
-          {/* 元信息 */}
-          <div className="flex flex-wrap items-center gap-4 text-sm font-mono mb-4">
-            <span className="flex items-center gap-2">
-              <span className="text-cyber-primary">📅</span>
-              <span className="text-cyber-muted">{formatDate(post.date)}</span>
-            </span>
-            <span className="text-cyber-secondary">|</span>
-            <span className="flex items-center gap-2">
-              <span className="text-cyber-primary">⏱️</span>
-              <span className="text-cyber-muted">{post.readingTime} 分钟阅读</span>
-            </span>
-            <span className="text-cyber-secondary">|</span>
-            <span className="flex items-center gap-2">
-              <span className="text-cyber-primary">👤</span>
-              <span className="text-cyber-muted">{post.author}</span>
-            </span>
-          </div>
-
-          {/* 标题 */}
-          <h1 className="text-3xl md:text-5xl font-bold mb-6" data-text={post.title}>
-            <span className="neon-text">{post.title}</span>
-          </h1>
-
-          {/* 标签云 */}
-          <div className="flex flex-wrap gap-2">
-            {post.tags.map((tag, index) => (
-              <Link
-                key={tag}
-                href={`/?tag=${tag}`}
-                className="group relative px-4 py-2 border border-cyber-primary/30 text-sm
-                         hover:border-cyber-secondary transition-all duration-300 overflow-hidden"
-                style={{ animationDelay: `${index * 50}ms` }}
-              >
-                <span className="relative z-10 text-cyber-muted group-hover:text-cyber-primary">
-                  #{tag}
-                </span>
-                <span className="absolute inset-0 bg-cyber-primary/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
-              </Link>
-            ))}
-          </div>
+      <header className="neon-panel p-4 sm:p-6 md:p-8">
+        {/* 元信息 - 移动端优化 */}
+        <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-[10px] sm:text-sm font-mono mb-3 sm:mb-4">
+          <span className="flex items-center gap-1">
+            <span className="text-cyber-primary">📅</span>
+            <span className="text-cyber-muted">{formatDate(post.date)}</span>
+          </span>
+          <span className="text-cyber-secondary hidden xs:inline">|</span>
+          <span className="flex items-center gap-1">
+            <span className="text-cyber-primary">⏱️</span>
+            <span className="text-cyber-muted">{post.readingTime}分钟</span>
+          </span>
+          <span className="text-cyber-secondary hidden sm:inline">|</span>
+          <span className="flex items-center gap-1 hidden sm:flex">
+            <span className="text-cyber-primary">👤</span>
+            <span className="text-cyber-muted">{post.author}</span>
+          </span>
         </div>
 
-        {/* 装饰扫描线 */}
-        <div className="scan-line"></div>
+        {/* 标题 */}
+        <h1 className="text-xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 break-words">
+          <span className="neon-text">{post.title}</span>
+        </h1>
+
+        {/* 标签 - 移动端优化 */}
+        <div className="flex flex-wrap gap-1.5 sm:gap-2">
+          {post.tags.map((tag) => (
+            <Link
+              key={tag}
+              href={`/?tag=${tag}`}
+              className="px-2 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-xs 
+                         border border-cyber-primary/30 text-cyber-primary 
+                         hover:border-cyber-secondary transition-all touch-target"
+            >
+              #{tag}
+            </Link>
+          ))}
+        </div>
       </header>
 
-      {/* 文章内容 */}
-      <div className="neon-panel p-6 md:p-8">
-        <div className="prose prose-invert prose-lg max-w-none">
+      {/* 文章内容 - 移动端优化字体 */}
+      <div className="neon-panel p-4 sm:p-6 md:p-8">
+        <div className="prose prose-invert prose-sm sm:prose-base max-w-none">
           {post.content.split('\n').map((line, i) => {
             if (line.startsWith('# ')) {
               return (
-                <h1 key={i} className="text-2xl md:text-3xl font-bold text-cyber-primary mt-8 mb-4" 
-                    data-text={line.slice(2)}>
+                <h1 key={i} className="text-lg sm:text-xl md:text-2xl font-bold text-cyber-primary mt-4 mb-2">
                   {line.slice(2)}
                 </h1>
               )
             } else if (line.startsWith('## ')) {
               return (
-                <h2 key={i} className="text-xl md:text-2xl font-bold text-cyber-secondary mt-6 mb-3">
+                <h2 key={i} className="text-base sm:text-lg md:text-xl font-bold text-cyber-secondary mt-3 mb-2">
                   {line.slice(3)}
                 </h2>
               )
             } else if (line.startsWith('### ')) {
               return (
-                <h3 key={i} className="text-lg md:text-xl font-bold text-cyber-accent mt-4 mb-2">
+                <h3 key={i} className="text-sm sm:text-base font-bold text-cyber-accent mt-2 mb-1">
                   {line.slice(4)}
                 </h3>
               )
             } else if (line.startsWith('> ')) {
               return (
-                <blockquote key={i} className="border-l-4 border-cyber-primary pl-4 py-2 my-4 
-                                               bg-cyber-primary/5 italic text-cyber-muted">
+                <blockquote key={i} className="border-l-2 border-cyber-primary pl-3 py-1 my-2 
+                                               text-xs sm:text-sm italic text-cyber-muted">
                   {line.slice(2)}
                 </blockquote>
               )
-            } else if (line.startsWith('```')) {
-              // 代码块开始或结束
-              return null
             } else if (line.trim() === '') {
-              return <div key={i} className="h-4"></div>
+              return <div key={i} className="h-2 sm:h-3"></div>
             } else {
               return (
-                <p key={i} className="text-cyber-text/80 leading-relaxed my-3">
+                <p key={i} className="text-xs sm:text-sm leading-relaxed my-2">
                   {line}
                 </p>
               )
@@ -179,29 +153,29 @@ export default async function PostPage({
       </div>
 
       {/* 文章导航 */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4">
         <Link
           href="/posts"
-          className="neon-panel p-4 hover:border-cyber-secondary transition-all duration-300 group"
+          className="neon-panel p-3 sm:p-4 hover:border-cyber-secondary transition-all group"
         >
-          <div className="text-xs text-cyber-muted/50 mb-2">
+          <div className="text-[10px] sm:text-xs text-cyber-muted/50 mb-1">
             <span className="text-cyber-primary">$</span> ls ../posts
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 sm:gap-2">
             <span className="text-cyber-secondary group-hover:-translate-x-1 transition-transform">←</span>
-            <span className="text-cyber-primary group-hover:neon-text">所有文章</span>
+            <span className="text-cyber-primary text-xs sm:text-sm truncate">所有文章</span>
           </div>
         </Link>
 
         <Link
           href="/"
-          className="neon-panel p-4 hover:border-cyber-secondary transition-all duration-300 group text-right"
+          className="neon-panel p-3 sm:p-4 hover:border-cyber-secondary transition-all group text-right"
         >
-          <div className="text-xs text-cyber-muted/50 mb-2">
+          <div className="text-[10px] sm:text-xs text-cyber-muted/50 mb-1">
             <span className="text-cyber-primary">$</span> cd ~
           </div>
-          <div className="flex items-center justify-end gap-2">
-            <span className="text-cyber-primary group-hover:neon-text">返回首页</span>
+          <div className="flex items-center justify-end gap-1 sm:gap-2">
+            <span className="text-cyber-primary text-xs sm:text-sm truncate">返回首页</span>
             <span className="text-cyber-secondary group-hover:translate-x-1 transition-transform">→</span>
           </div>
         </Link>

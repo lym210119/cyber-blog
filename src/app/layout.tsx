@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
@@ -6,16 +6,57 @@ import { MobileNav } from '@/components/MobileNav'
 import { CommandPalette } from '@/components/CommandPalette'
 import './globals.css'
 
-const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
-const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin'] })
+const geistSans = Geist({
+  variable: '--font-geist-sans',
+  subsets: ['latin'],
+})
+
+const geistMono = Geist_Mono({
+  variable: '--font-geist-mono',
+  subsets: ['latin'],
+})
 
 export const metadata: Metadata = {
-  title: 'CYBERPUNK::TERMINAL',
-  description: '极客终端 · 赛博空间',
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover',
+  title: {
+    template: '%s | 赛博空间',
+    default: '赛博空间 · 极客终端博客',
+  },
+  description: '一个赛博朋克风格的极客技术博客，融合霓虹光效与终端美学',
+  keywords: ['赛博朋克', '极客', '博客', 'Next.js', 'React', 'TypeScript'],
+  authors: [{ name: 'CyberGeek' }],
+  openGraph: {
+    title: '赛博空间 · 极客终端博客',
+    description: '进入赛博空间，探索极客技术',
+    siteName: '赛博空间',
+    images: ['/og-image.png'],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: '赛博空间 · 极客终端博客',
+    description: '进入赛博空间，探索极客技术',
+    images: ['/og-image.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  viewportFit: 'cover',
+  themeColor: '#00ffff',
+}
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="zh">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>

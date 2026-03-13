@@ -35,7 +35,6 @@ export async function GET(request: Request) {
       limit: limit ? parseInt(limit) : 10,
     })
     
-    // 设置缓存头
     return NextResponse.json(posts, {
       headers: {
         'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=120',

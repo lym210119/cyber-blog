@@ -13,12 +13,13 @@ const config: Config = {
           dark: '#0a0c0f',
           deeper: '#050708',
           bg: '#0f1117',
-          primary: '#00ffff',      // 霓虹青
-          secondary: '#ff00ff',     // 霓虹粉
-          accent: '#ffff00',        // 霓虹黄
-          purple: '#b300ff',        // 霓虹紫
+          primary: '#00ffff',
+          secondary: '#ff00ff',
+          accent: '#ffff00',
+          purple: '#b300ff',
           text: '#e0e0e0',
           muted: '#8892b0',
+          red: '#ff3b3b',
         },
       },
       fontFamily: {
@@ -56,13 +57,10 @@ const config: Config = {
           '27%': { transform: 'none' },
           '30%': { transform: 'skew(0.8deg, -0.1deg)' },
           '35%': { transform: 'none' },
-          '52%': { transform: 'none' },
-          '55%': { transform: 'skew(-1deg, 0.2deg)' },
-          '50%': { transform: 'none' },
         },
         'float': {
           '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-10px)' },
+          '50%': { transform: 'translateY(-5px)' },
         },
         'cursor-blink': {
           '0%, 100%': { opacity: '1' },
@@ -73,9 +71,20 @@ const config: Config = {
           '100%': { transform: 'translateY(40px)' },
         },
       },
-      backgroundImage: {
-        'cyber-grid': 'linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px)',
-        'cyber-gradient': 'radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.1) 0%, transparent 50%)',
+      screens: {
+        'xs': '475px',
+        'sm': '640px',
+        'md': '768px',
+        'lg': '1024px',
+        'xl': '1280px',
+        '2xl': '1536px',
+      },
+      spacing: {
+        'safe-top': 'env(safe-area-inset-top)',
+        'safe-bottom': 'env(safe-area-inset-bottom)',
+      },
+      minHeight: {
+        'touch': '44px',
       },
     },
   },

@@ -68,7 +68,7 @@ export function getPostBySlug(slug: string): Post | null {
       date: data.date || new Date().toISOString(),
       author: data.author || 'Anonymous',
       tags: data.tags || [],
-      excerpt: data.excerpt || content.slice(0, 200) + '...',
+      excerpt: data.excerpt || content.slice(0, 150) + '...',
       content,
       readingTime,
     }

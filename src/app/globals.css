@@ -11,20 +11,19 @@
     --cyber-accent: #ffff00;
     --cyber-purple: #b300ff;
     --cyber-text: #e0e0e0;
+    --safe-top: env(safe-area-inset-top);
+    --safe-bottom: env(safe-area-inset-bottom);
   }
 }
 
 @layer components {
-/* 霓虹面板 - 修复溢出 */
+  /* 霓虹面板 - 移动端优化 */
   .neon-panel {
     @apply relative bg-cyber-deeper/90 border border-cyber-primary/30 overflow-hidden;
     backdrop-filter: blur(10px);
-    box-shadow: 
-      0 0 30px rgba(0, 255, 255, 0.2),
-      inset 0 0 20px rgba(0, 255, 255, 0.1);
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
   }
 
-  /* 修复shine动画 - 使用伪元素并限制在容器内 */
   .neon-panel::before {
     content: '';
     @apply absolute inset-0 pointer-events-none;
@@ -35,10 +34,8 @@
       transparent 70%
     );
     animation: shine 3s infinite;
-    will-change: transform;
   }
 
-  /* 修复扫描线 - 限制在容器内 */
   .neon-panel::after {
     content: '';
     @apply absolute inset-0 pointer-events-none;
@@ -51,66 +48,49 @@
     );
   }
 
-  /* 霓虹文字 */
+  /* 霓虹文字 - 移动端优化 */
   .neon-text {
     @apply text-cyber-primary font-bold;
-    text-shadow: 
-      0 0 10px #00ffff,
-      0 0 20px #00ffff,
-      0 0 40px #00ffff;
+    text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
   }
 
   .neon-text-pink {
     @apply text-cyber-secondary;
-    text-shadow: 
-      0 0 10px #ff00ff,
-      0 0 20px #ff00ff,
-      0 0 40px #ff00ff;
+    text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
   }
 
-  .neon-text-purple {
-    @apply text-cyber-purple;
-    text-shadow: 
-      0 0 10px #b300ff,
-      0 0 20px #b300ff,
-      0 0 40px #b300ff;
-  }
-
-  /* 故障文字 */
+  /* 故障文字 - 移动端优化 */
   .glitch-text {
-    @apply relative;
+    @apply relative inline-block;
     animation: glitch 3s infinite;
   }
 
   .glitch-text::before,
   .glitch-text::after {
     content: attr(data-text);
-    @apply absolute top-0 left-0 w-full h-full;
+    @apply absolute top-0 left-0 w-full h-full pointer-events-none;
+    clip-path: inset(0 0 0 0);
   }
 
   .glitch-text::before {
     color: #ff00ff;
     z-index: -1;
     animation: glitch-offset 0.3s infinite;
+    text-shadow: 0 0 5px #ff00ff;
   }
 
   .glitch-text::after {
     color: #00ffff;
     z-index: -2;
     animation: glitch-offset2 0.2s infinite;
+    text-shadow: 0 0 5px #00ffff;
   }
 
-  /* 终端光标 */
-  .terminal-cursor::after {
-    content: '▊';
-    @apply ml-1 text-cyber-primary;
-    animation: cursor-blink 1s step-end infinite;
-  }
-
-  /* 科技按钮 */
+  /* 科技按钮 - 移动端优化 */
   .cyber-button {
-    @apply relative px-6 py-2 bg-transparent border border-cyber-primary text-cyber-primary 
-           overflow-hidden transition-all duration-300 hover:text-cyber-deeper;
+    @apply relative px-4 py-2 sm:px-6 sm:py-2 bg-transparent border border-cyber-primary 
+           text-cyber-primary overflow-hidden transition-all duration-300 
+           hover:text-cyber-deeper text-sm sm:text-base;
   }
 
   .cyber-button::before {
@@ -123,13 +103,9 @@
     @apply scale-x-100;
   }
 
-  .cyber-button:hover {
-    box-shadow: 0 0 30px #00ffff;
-  }
-
-  /* 扫描线 */
+  /* 扫描线 - 移动端减弱 */
   .scan-line {
-    @apply absolute inset-0 pointer-events-none opacity-20;
+    @apply absolute inset-0 pointer-events-none opacity-10 sm:opacity-20;
     background: linear-gradient(
       to bottom,
       transparent 50%,
@@ -138,18 +114,29 @@
     background-size: 100% 4px;
     animation: scan-line 8s linear infinite;
   }
+
+  /* 触摸目标优化 */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px] flex items-center justify-center;
+  }
 }
 
-/* 基础样式 */
+/* 基础样式 - 移动端优化 */
+html {
+  @apply overflow-x-hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
 body {
   background-color: #0f1117;
   color: var(--cyber-text);
   font-family: var(--font-geist-mono), 'Fira Code', monospace;
-  position: relative;
-  min-height: 100vh;
+  @apply min-h-screen overflow-x-hidden w-full max-w-[100vw] relative;
+  padding-top: var(--safe-top);
+  padding-bottom: var(--safe-bottom);
 }
 
-/* 动态网格背景 */
+/* 动态网格背景 - 移动端减弱 */
 body::before {
   content: '';
   position: fixed;
@@ -158,63 +145,47 @@ body::before {
   width: 100vw;
   height: 100vh;
   background-image: 
-    linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 40px 40px;
+    linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+  @apply sm:bg-[length:40px_40px] sm:opacity-100 opacity-50;
   pointer-events: none;
   z-index: -1;
   animation: grid-flow 20s linear infinite;
 }
 
-/* 霓虹光晕 */
-body::after {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.1) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: -1;
-}
-
+/* 动画 keyframes */
 @keyframes shine {
-  0% { transform: translateX(-100%) rotate(45deg); }
-  100% { transform: translateX(200%) rotate(45deg); }
+  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  100% { transform: translateX(200%) translateY(200%) rotate(45deg); }
 }
 
 @keyframes glitch-offset {
   0%, 100% { transform: translate(0); }
-  20% { transform: translate(-2px, 2px); }
-  40% { transform: translate(-2px, -2px); }
-  60% { transform: translate(2px, 2px); }
-  80% { transform: translate(2px, -2px); }
+  20% { transform: translate(-1px, 1px); }
+  40% { transform: translate(-1px, -1px); }
+  60% { transform: translate(1px, 1px); }
+  80% { transform: translate(1px, -1px); }
 }
 
 @keyframes glitch-offset2 {
   0%, 100% { transform: translate(0); }
-  20% { transform: translate(2px, -2px); }
-  40% { transform: translate(2px, 2px); }
-  60% { transform: translate(-2px, -2px); }
-  80% { transform: translate(-2px, 2px); }
+  20% { transform: translate(1px, -1px); }
+  40% { transform: translate(1px, 1px); }
+  60% { transform: translate(-1px, -1px); }
+  80% { transform: translate(-1px, 1px); }
 }
 
-/* 移动端适配 */
-@media (max-width: 768px) {
-  body::before {
-    background-size: 20px 20px;
-  }
-  
-  .neon-panel {
-    backdrop-filter: blur(5px);
-  }
+/* 移动端容器优化 */
+.container {
+  @apply w-full px-3 sm:px-4 mx-auto;
 }
 
-/* 自定义滚动条 */
+/* 滚动条优化 */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 4px;
+  height: 4px;
+  @apply sm:w-[6px] sm:h-[6px];
 }
 
 ::-webkit-scrollbar-track {
@@ -224,10 +195,12 @@ body::after {
 ::-webkit-scrollbar-thumb {
   background: #00ffff;
   border: 1px solid #ff00ff;
-  box-shadow: 0 0 10px #00ffff;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #ff00ff;
-  box-shadow: 0 0 10px #ff00ff;
+/* 移动端滚动条隐藏 */
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 2px;
+    height: 2px;
+  }
 }
