@@ -121,7 +121,7 @@ export default function NotFound() {
 
             <div className="space-y-1 text-left text-xs sm:text-sm">
               <p className="text-cyber-text/80">
-                <span className="text-cyber-pink">⚠</span> 错误代码: <span className="text-cyber-primary">PATH_NOT_FOUND</span>
+                <span className="text-cyber-pink">⚠️</span> 错误代码: <span className="text-cyber-primary">PATH_NOT_FOUND</span>
               </p>
               <p className="text-cyber-text/80">
                 <span className="text-cyber-pink">🔍</span> 请求路径: <span className="text-cyber-secondary break-all">
