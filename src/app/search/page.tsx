@@ -77,7 +77,7 @@ function SearchContent() {
   }
 
   return (
-    <div className="container mx-auto max-w-4xl space-y-4 sm:space-y-6">
+    <div className="container mx-auto space-y-4 sm:space-y-6">
       {/* 搜索框 */}
       <div className="neon-panel p-4 sm:p-6">
         <div className="flex items-center gap-2 text-xs sm:text-sm mb-3 sm:mb-4">
