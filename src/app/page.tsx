@@ -28,9 +28,9 @@ export default async function Home({
           <span className="text-cyber-muted">./welcome.sh</span>
         </div>
 
-        <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-2 sm:mb-4">
+        <h1 className="cyber-glitch-text text-2xl sm:text-4xl md:text-5xl font-bold mb-2 sm:mb-4">
           <span className="neon-text" data-text="CYBER">CYBER</span>
-          <span className="text-cyber-secondary mx-2">::</span>
+          <span className="text-cyber-secondary mx-2">•</span>
           <span className="neon-text-pink" data-text="BLOG">BLOG</span>
         </h1>
 
