@@ -40,10 +40,10 @@ export const Header = () => {
           {/* Logo */}
           <Link href="/" className="touch-target flex items-center gap-1 sm:gap-2">
             <span className="text-cyber-primary text-lg sm:text-xl animate-pulse">{'>_'}</span>
-            <span className="neon-text text-sm sm:text-base font-bold hidden xs:inline">
-              CYBER::BLOG
+            <span className="cyber-glitch-text text-sm sm:text-base font-bold hidden xs:inline">
+              CYBER • BLOG
             </span>
-            <span className="neon-text text-sm sm:hidden">
+            <span className="cyber-glitch-text text-sm sm:hidden">
               CYBER
             </span>
           </Link>
