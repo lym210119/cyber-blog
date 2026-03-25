@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Post } from '@/types'
+import { useMemo, useCallback } from 'react'
 
 interface TerminalCardProps {
   post: Post
@@ -16,6 +17,15 @@ export const TerminalCard = ({ post, index }: TerminalCardProps) => {
       day: '2-digit',
     })
   }
+
+  // MEMOIZE formatted date to prevent recalculating on every render (rerender-memo rule)
+  const formattedDate = useMemo(() => formatDate(post.date), [post.date])
+
+  // MEMOIZE tag click handler to prevent creating new function on every render (rerender-functional-setstate pattern)
+  const handleTagClick = useCallback((e: React.MouseEvent<HTMLSpanElement>, tag: string) => {
+    e.preventDefault()
+    window.location.href = `/?tag=${tag}`
+  }, [])
 
   return (
     <motion.article
@@ -33,7 +43,7 @@ export const TerminalCard = ({ post, index }: TerminalCardProps) => {
             cat {post.slug}
           </span>
           <span className="ml-auto flex items-center gap-1 flex-shrink-0">
-            <span className="text-cyber-primary hidden xs:inline">{formatDate(post.date)}</span>
+            <span className="text-cyber-primary hidden xs:inline">{formattedDate}</span>
             <span className="text-cyber-secondary hidden xs:inline">|</span>
             <span className="text-cyber-purple">{post.readingTime}min</span>
           </span>
@@ -58,10 +68,7 @@ export const TerminalCard = ({ post, index }: TerminalCardProps) => {
               className="px-2 py-0.5 sm:px-3 sm:py-1 text-[8px] sm:text-xs 
                          border border-cyber-primary/30 text-cyber-primary 
                        hover:bg-cyber-primary/10 transition-all duration-300"
-              onClick={(e) => {
-                e.preventDefault()
-                window.location.href = `/?tag=${tag}`
-              }}
+              onClick={(e) => handleTagClick(e, tag)}
             >
               #{tag}
             </span>
