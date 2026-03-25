@@ -1,5 +1,5 @@
 import { getAllPosts } from '@/lib/server/posts'
-import { PostCard } from '@/components/PostCard'
+import { PostCard } from '@/components/postcard'
 import Link from 'next/link'
 
 export default async function PostsPage({
