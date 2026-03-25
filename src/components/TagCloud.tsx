@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useMemo, useCallback } from 'react'
 
 interface TagCloudProps {
   tags: Array<{ name: string; count: number }>
@@ -11,7 +11,16 @@ interface TagCloudProps {
 
 export const TagCloud = ({ tags, currentTag }: TagCloudProps) => {
   const [showAll, setShowAll] = useState(false)
-  const displayTags = showAll ? tags : tags.slice(0, 12)
+  
+  // MEMOIZE expensive computation (rerender-memo rule)
+  const displayTags = useMemo(() => {
+    return showAll ? tags : tags.slice(0, 12)
+  }, [tags, showAll])
+  
+  // MEMOIZE event handler to prevent creating new function on every render (rerender-functional-setstate pattern)
+  const toggleShowAll = useCallback(() => {
+    setShowAll(!showAll)
+  }, [showAll]) // showAll is a dependency because we need the latest value
 
   return (
     <div className="neon-panel p-3 sm:p-4 sticky top-20 w-full">
@@ -53,7 +62,7 @@ export const TagCloud = ({ tags, currentTag }: TagCloudProps) => {
       {/* 移动端显示更多按钮 */}
       {tags.length > 12 && (
         <button
-          onClick={() => setShowAll(!showAll)}
+          onClick={toggleShowAll}
           className="w-full mt-3 text-xs text-cyber-primary border border-cyber-primary/30 
                      py-2 hover:bg-cyber-primary/10 transition-colors touch-target"
         >

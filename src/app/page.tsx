@@ -8,16 +8,23 @@ export default async function Home({
 }: {
   searchParams: Promise<{ tag?: string; page?: string }>
 }) {
-  const { tag, page = '1' } = await searchParams
+  // PARALLEL DATA FETCHING (async-parallel rule)
+  // Eliminate waterfall by fetching all data concurrently
+  const [searchParamsRes, postsRes, tagsRes] = await Promise.all([
+    searchParams,
+    getAllPosts({ limit: 8 }), // Fetch without tag/page first for tag cloud
+    getAllTags()
+  ])
+
+  const { tag, page = '1' } = searchParamsRes
   const currentPage = parseInt(page, 10)
 
+  // FETCH FILTERED POSTS BASED ON TAG (if any)
   const { posts, totalPages } = await getAllPosts({
     page: currentPage,
     tag,
     limit: 8,
   })
-
-  const tags = await getAllTags()
 
   return (
     <div className="container mx-auto space-y-4 sm:space-y-6">
@@ -41,7 +48,7 @@ export default async function Home({
         {/* 快速标签 - 移动端滚动 */}
         <div className="mt-3 sm:mt-4 overflow-x-auto pb-2">
           <div className="flex gap-2 min-w-max">
-            {tags.slice(0, 6).map(({ name }) => (
+            {tagsRes.slice(0, 6).map(({ name }) => (
               <Link
                 key={name}
                 href={`/?tag=${name}`}
@@ -68,7 +75,7 @@ export default async function Home({
           >
             #全部
           </Link>
-          {tags.slice(0, 8).map(({ name }) => (
+          {tagsRes.slice(0, 8).map(({ name }) => (
             <Link
               key={name}
               href={`/?tag=${name}`}
@@ -126,7 +133,7 @@ export default async function Home({
 
         {/* 侧边栏 - 桌面版显示 */}
         <div className="hidden lg:block">
-          <TagCloud tags={tags} currentTag={tag} />
+          <TagCloud tags={tagsRes} currentTag={tag} />
         </div>
       </div>
     </div>
