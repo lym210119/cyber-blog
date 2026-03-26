@@ -41,6 +41,8 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  // 添加metadataBase以解决社交卡片图片警告
+  metadataBase: 'http://localhost:3000',
 }
 
 export const viewport: Viewport = {

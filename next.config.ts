@@ -2,17 +2,11 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  
   images: {
     domains: [],
     unoptimized: process.env.NODE_ENV === 'development',
   },
-
-  experimental: {
-    typedRoutes: true,
-  },
-
-  // 移动端优化
+  typedRoutes: true,
   async headers() {
     return [
       {
@@ -33,18 +27,6 @@ const nextConfig: NextConfig = {
         ],
       },
     ]
-  },
-
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        fs: false,
-        path: false,
-        os: false,
-      }
-    }
-    return config
   },
 }
 
