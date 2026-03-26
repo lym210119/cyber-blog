@@ -292,7 +292,7 @@ body::after {
 
 /* ========== 统一文章样式 (cyber-markdown) ========== */
 .cyber-markdown {
-  @apply text-cyber-text/90 leading-relaxed;
+  @apply text-cyber-text opacity-90 leading-relaxed;
   font-family: var(--font-geist-mono), 'Fira Code', monospace;
 }
 
@@ -350,7 +350,7 @@ body::after {
 }
 
 .cyber-markdown li {
-  @apply text-cyber-text/80;
+  @apply text-cyber-text opacity-80;
 }
 
 .cyber-markdown ul li::marker {
@@ -369,7 +369,7 @@ body::after {
 }
 
 .cyber-markdown blockquote p {
-  @apply text-cyber-text/80;
+  @apply text-cyber-text opacity-80;
 }
 
 /* 代码块 (由 rehype-pretty-code 生成) */
@@ -398,7 +398,7 @@ body::after {
 }
 
 .cyber-markdown td {
-  @apply border border-cyber-primary/30 px-4 py-2 text-cyber-text/80;
+  @apply border border-cyber-primary/30 px-4 py-2 text-cyber-text opacity-80;
 }
 
 /* 分割线 */
