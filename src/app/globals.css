@@ -512,3 +512,28 @@ body::after {
   60% { transform: translate(-2px, -2px); }
   80% { transform: translate(-2px, 2px); }
 }
+
+/* Focus styles for accessibility */
+:focus-visible {
+  @apply outline-none ring-2 ring-cyber-primary ring-offset-2 ring-offset-cyber-deeper;
+}
+
+/* Ensure interactive elements have a cursor pointer */
+button,
+[role="button"],
+a,
+input,
+textarea,
+select {
+  @apply cursor-pointer;
+}
+
+/* Disable button default styling in Safari */
+button {
+  @apply appearance-none;
+}
+
+/* Touch target minimum size for accessibility */
+.touch-target {
+  @apply min-w-[44px] min-h-[44px] flex items-center justify-center;
+}
