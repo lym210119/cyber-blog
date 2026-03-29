@@ -1,7 +1,20 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
+@theme {
+  --color-cyber-dark: rgb(10 12 15);
+  --color-cyber-deeper: rgb(5 7 8);
+  --color-cyber-bg: rgb(15 17 23);
+  --color-cyber-primary: rgb(0 255 255);
+  --color-cyber-secondary: rgb(255 0 255);
+  --color-cyber-accent: rgb(255 255 0);
+  --color-cyber-purple: rgb(179 0 255);
+  --color-cyber-text: rgb(224 224 224);
+  --color-cyber-muted: rgb(136 146 176);
+  --color-cyber-red: rgb(255 59 59);
+  --color-cyber-cyan: rgb(0 255 255);
+}
+
+/* Global styles */
 :root {
   --cyber-dark: 10 12 15;
   --cyber-deeper: 5 7 8;
@@ -16,80 +29,15 @@
   --cyber-cyan: 0 255 255;
 }
 
-/* Utility classes for cyber theme */
-.bg-cyber-dark {
-  background-color: rgb(var(--cyber-dark));
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.bg-cyber-deeper {
-  background-color: rgb(var(--cyber-deeper));
-}
-
-.bg-cyber-bg {
+body {
   background-color: rgb(var(--cyber-bg));
-}
-
-.text-cyber-primary {
-  color: rgb(var(--cyber-primary));
-}
-
-.text-cyber-secondary {
-  color: rgb(var(--cyber-secondary));
-}
-
-.text-cyber-accent {
-  color: rgb(var(--cyber-accent));
-}
-
-.text-cyber-purple {
-  color: rgb(var(--cyber-purple));
-}
-
-.text-cyber-text {
   color: rgb(var(--cyber-text));
-}
-
-.text-cyber-muted {
-  color: rgb(var(--cyber-muted));
-}
-
-.text-cyber-red {
-  color: rgb(var(--cyber-red));
-}
-
-.text-cyber-cyan {
-  color: rgb(var(--cyber-cyan));
-}
-
-.border-cyber-primary {
-  border-color: rgb(var(--cyber-primary));
-}
-
-.border-cyber-secondary {
-  border-color: rgb(var(--cyber-secondary));
-}
-
-.border-cyber-accent {
-  border-color: rgb(var(--cyber-accent));
-}
-
-/* Opacity variants */
-.bg-cyber-dark\/50 {
-  background-color: rgb(var(--cyber-dark) / 0.5);
-}
-
-.bg-cyber-deeper\/90 {
-  background-color: rgb(var(--cyber-deeper) / 0.9);
-}
-
-.bg-cyber-bg\/80 {
-  background-color: rgb(var(--cyber-bg) / 0.8);
-}
-
-.text-cyber-primary\/60 {
-  color: rgb(var(--cyber-primary) / 0.6);
-}
-
-.border-cyber-secondary\/30 {
-  border-color: rgb(var(--cyber-secondary) / 0.3);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6;
 }
