@@ -77,7 +77,7 @@ export const Header = () => {
           {/* 移动端菜单按钮 */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden touch-target text-cyber-primary"
+            className="touch-target text-cyber-primary md:hidden"
           >
             <span className="text-2xl">{menuOpen ? '✕' : '☰'}</span>
           </button>
