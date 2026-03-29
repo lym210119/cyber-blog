@@ -200,21 +200,10 @@
 }
 
 /* ========== 触摸目标优化 ========== */
-/* ✅ 使用 @utility 而不是 @layer components */
-@utility touch-target {
-  min-height: 2.75rem;  /* 44px */
-  min-width: 2.75rem;   /* 44px */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-/*
+
 .touch-target {
   min-height: 44px;
   min-width: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 */
 
