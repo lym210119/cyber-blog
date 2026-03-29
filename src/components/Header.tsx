@@ -77,7 +77,7 @@ export const Header = () => {
           {/* 移动端菜单按钮 */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden flex items-center justify-center text-cyber-primary"
+            className="md:hidden min-h-[2.75rem] min-w-[2.75rem] flex items-center justify-center text-cyber-primary"
           >
             <span className="text-2xl">{menuOpen ? '✕' : '☰'}</span>
           </button>
