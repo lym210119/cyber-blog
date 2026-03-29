@@ -200,6 +200,12 @@
 }
 
 /* ========== 触摸目标优化 ========== */
+@layer components {
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px] flex items-center justify-center;
+  }
+}
+/*
 .touch-target {
   min-height: 44px;
   min-width: 44px;
@@ -207,6 +213,7 @@
   align-items: center;
   justify-content: center;
 }
+*/
 
 /* ========== 基础样式 - 移动端优化 ========== */
 html {
